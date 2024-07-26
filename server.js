@@ -90,6 +90,11 @@ if(allowUpload)
 }
 
 http.createServer(function (request, response) {
+    if (path.normalize(decodeURIComponent(urlObject.pathname)) !== decodeURIComponent(urlObject.pathname)) {
+        response.statusCode = 403;
+        response.end();
+        return;
+    }
     var urlObject = urlParser.parse(request.url, true),
         pathname = decodeURIComponent(urlObject.pathname),
         filePath = path.join(currentDir, pathname);
